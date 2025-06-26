@@ -1,12 +1,21 @@
 import { type ClientSchema, a, defineData } from "@aws-amplify/backend";
-import { invoiceApi } from "../functions/invoice-api/resource";
+import { sayHello } from "../functions/say-hello/resource"
 
 const schema = a.schema({
-  // 請求書管理のREST API
-  invoices: a
+  sayHello: a
     .query()
+    .arguments({
+      name: a.string(),
+    })
+    .returns(a.string())
     .authorization((allow) => [allow.publicApiKey()])
-    .handler(a.handler.function(invoiceApi)),
+    .handler(a.handler.function(sayHello)),
+
+  Todo: a
+    .model({
+      content: a.string(),
+    })
+    .authorization((allow) => [allow.publicApiKey()]),
 
   // 請求書データモデル
   Invoices: a
