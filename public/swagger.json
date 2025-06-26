@@ -1,0 +1,73 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Invoice Management API",
+    "description": "REST API for managing invoices using AWS Lambda and DynamoDB",
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "https://{restapi-id}.execute-api.{region}.amazonaws.com/{stage}",
+      "description": "API Gateway Endpoint",
+      "variables": {
+        "restapi-id": {
+          "default": "your-api-id",
+          "description": "API Gateway ID"
+        },
+        "region": {
+          "default": "ap-northeast-1",
+          "description": "AWS Region"
+        },
+        "stage": {
+          "default": "prod",
+          "description": "API Stage"
+        }
+      }
+    }
+  ],
+  "paths": {
+    "/invoices": {
+      "get": {
+        "summary": "全ての請求書を取得",
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "invoices": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/Invoice"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Invoice": {
+        "type": "object",
+        "properties": {
+          "InvoiceID": { "type": "string" },
+          "BillNo": { "type": "string" },
+          "SlipNo": { "type": "string" },
+          "CustomerID": { "type": "string" },
+          "CustomerName": { "type": "string" },
+          "Products": { "type": "string" },
+          "Number": { "type": "integer" },
+          "UnitPrice": { "type": "number" },
+          "Date": { "type": "string" }
+        }
+      }
+    }
+  }
+}
